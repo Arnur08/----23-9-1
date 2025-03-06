@@ -8,7 +8,7 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: white;
+            background-color: #ffccdd; /* Розовый фон */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,16 +16,37 @@
             flex-direction: column;
             overflow: hidden;
             font-family: Arial, sans-serif;
+            text-align: center;
         }
 
-        .confetti {
+        .heart {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 15px;
+            height: 15px;
+            background-color: red;
+            transform: rotate(-45deg);
+            position: absolute;
+            animation: fall linear infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            width: 15px;
+            height: 15px;
             background-color: red;
             border-radius: 50%;
-            opacity: 0.7;
-            animation: fall linear infinite;
+            position: absolute;
+        }
+
+        .heart::before {
+            top: -7px;
+            left: 0;
+        }
+
+        .heart::after {
+            top: 0;
+            left: 7px;
         }
 
         @keyframes fall {
@@ -35,21 +56,36 @@
 
         .message-box {
             display: none;
-            padding: 20px;
+            padding: 15px;
             background-color: #ff69b4;
             color: white;
             text-align: center;
-            font-size: 1.5em;
+            font-size: 1.2em;
             border-radius: 10px;
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-            width: 80%;
-            max-width: 600px;
+            width: 90%;
+            max-width: 400px;
         }
 
-        h1 {
-            color: #ff1493;
+        .nurse-box {
+            display: none;
+            position: absolute;
+            top: 10px;
+            width: 100%;
             text-align: center;
             font-size: 2em;
+            color: #ff1493;
+        }
+
+        .name-list {
+            font-size: 1em;
+            margin-top: 10px;
+        }
+
+        .fatima {
+            font-weight: bold;
+            color: #ff0000;
+            font-size: 1.2em;
         }
     </style>
 </head>
@@ -58,19 +94,26 @@
     <h1>Құрметті ханымдар!</h1>
 
     <script>
-        function createConfetti() {
-            for (let i = 0; i < 100; i++) {
-                let confetti = document.createElement("div");
-                confetti.className = "confetti";
-                confetti.style.left = Math.random() * 100 + "vw";
-                confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
-                confetti.style.backgroundColor = Math.random() < 0.5 ? "red" : "pink";
-                document.body.appendChild(confetti);
+        function createHearts() {
+            for (let i = 0; i < 80; i++) {
+                let heart = document.createElement("div");
+                heart.className = "heart";
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+                document.body.appendChild(heart);
 
                 setTimeout(() => {
-                    confetti.remove();
+                    heart.remove();
                 }, 5000);
             }
+        }
+
+        function showNurses() {
+            let nurseBox = document.createElement("div");
+            nurseBox.className = "nurse-box";
+            nurseBox.innerHTML = "👩‍⚕️ 👩‍⚕️ 👩‍⚕️";
+            document.body.appendChild(nurseBox);
+            nurseBox.style.display = "block";
         }
 
         function showMessage() {
@@ -80,13 +123,16 @@
                 <p><b>Құрметті арулар!</b></p>
                 <p>Сіздерді 8 Наурыз - Халықаралық әйелдер күнімен шын жүректен құттықтаймыз!</p>
                 <p>Сіздерге мықты денсаулық, шексіз бақыт және өмірлеріңіз жарқын болуын тілейміз!</p>
+                <p class="name-list">Ақсәйім, Ақниет, Арухан, Ақмаржан, Аяулым, Айназым, Береке, Жібек, Жанерке, Жансая, Жаннур, Памбук, Улдана, Іңкәр, Заки</p>
+                <p class="fatima">Және ерекше Фатима!</p>
             `;
             document.body.appendChild(messageBox);
             messageBox.style.display = "block";
         }
 
-        setTimeout(createConfetti, 500);
-        setTimeout(showMessage, 4000);
+        setTimeout(createHearts, 500);
+        setTimeout(showNurses, 3000);
+        setTimeout(showMessage, 5000);
     </script>
 
 </body>
